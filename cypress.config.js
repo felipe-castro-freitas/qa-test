@@ -6,7 +6,6 @@ module.exports = defineConfig({
       on("before:browser:launch", (browser, launchOptions) => {
         // Block ad-related domains
         if (browser.name === "chrome" || browser.name === "edge") {
-          launchOptions.args.push("--block-new-web-contents");
           launchOptions.args.push(
             "--host-rules=MAP *.doubleclick.net 127.0.0.1"
           );
@@ -20,6 +19,7 @@ module.exports = defineConfig({
         return launchOptions;
       });
     },
+    // chromeWebSecurity: false, // This disables web security policies in Chrome
     viewportWidth: 1280,
     viewportHeight: 720,
   },

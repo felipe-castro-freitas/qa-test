@@ -2,7 +2,7 @@
 
 ## Automated QA Technical Challenge for Insight Global
 
-This repository contains my solution for the QA technical challenge provided by Insight Global, showcasing test automation expertise with the DEMOQA website.
+This repository contains my solution for the QA technical challenge, showcasing test automation expertise with the DEMOQA website.
 
 ## Overview
 
@@ -63,19 +63,8 @@ The automated test suite includes:
 - Text Box form validations with special character handling
 - Checkbox tree interaction and state verification
 - Practice Form with various input types
-- Browser windows and alert handling
 - Email validation against RFC standards
 - Form submission verification
-
-## Bug Reporting
-
-Detailed bug reports are available in the `report.md` file, structured with:
-
-- Clear descriptions of each issue
-- Step-by-step reproduction instructions
-- Expected vs. actual behavior
-- Severity classifications
-- Supporting evidence (screenshots, videos)
 
 ## Future Enhancements
 

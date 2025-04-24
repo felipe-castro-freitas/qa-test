@@ -3,129 +3,166 @@ import BasePage from "./BasePage";
 class FormsPage extends BasePage {
   constructor() {
     super();
+    // Page paths
     this.path = "/forms";
+    this.practiceFormPath = "/automation-practice-form";
 
-    // Selectors
-    this.practiceFormMenu = "#item-0";
-
-    // Form selectors
-    this.firstNameInput = "#firstName";
-    this.lastNameInput = "#lastName";
-    this.emailInput = "#userEmail";
-    this.genderRadioMale = 'label[for="gender-radio-1"]';
-    this.genderRadioFemale = 'label[for="gender-radio-2"]';
-    this.genderRadioOther = 'label[for="gender-radio-3"]';
-    this.mobileNumberInput = "#userNumber";
-    this.dateOfBirthInput = "#dateOfBirthInput";
+    // Form field selectors
+    this.firstName = "#firstName";
+    this.lastName = "#lastName";
+    this.email = "#userEmail";
+    this.genderMale = "label[for='gender-radio-1']";
+    this.genderFemale = "label[for='gender-radio-2']";
+    this.genderOther = "label[for='gender-radio-3']";
+    this.mobileNumber = "#userNumber";
+    this.dateOfBirth = "#dateOfBirthInput";
     this.subjectsInput = "#subjectsInput";
-    this.hobbiesSports = 'label[for="hobbies-checkbox-1"]';
-    this.hobbiesReading = 'label[for="hobbies-checkbox-2"]';
-    this.hobbiesMusic = 'label[for="hobbies-checkbox-3"]';
-    this.uploadPicture = "#uploadPicture";
-    this.currentAddressInput = "#currentAddress";
-    this.stateDropdown = "#state";
-    this.cityDropdown = "#city";
+    this.hobbyCheckboxes = ".custom-checkbox";
+    this.pictureUpload = "#uploadPicture";
+    this.currentAddress = "#currentAddress";
+    this.stateSelect = "#state";
+    this.citySelect = "#city";
     this.submitButton = "#submit";
-    this.formSubmissionModal = ".modal-content";
+
+    // Results modal
+    this.submissionModal = ".modal-dialog";
+    this.modalCloseButton = "#closeLargeModal";
+    this.submissionTable = ".table";
   }
 
-  visitFormsPage() {
-    this.visit(this.path);
+  // Navigation methods
+  visitPracticeFormPage() {
+    this.visit(this.practiceFormPath);
     return this;
   }
 
-  clickPracticeFormMenu() {
-    this.clickElement(this.practiceFormMenu);
+  // Form filling methods
+  fillStudentName(firstName, lastName) {
+    cy.get(this.firstName).clear().type(firstName);
+    cy.get(this.lastName).clear().type(lastName);
     return this;
   }
 
-  fillStudentForm({
-    firstName,
-    lastName,
-    email,
-    gender,
-    mobileNumber,
-    dateOfBirth,
-    subjects,
-    hobbies,
-    picture,
-    currentAddress,
-    state,
-    city,
-  }) {
-    // Fill basic information
-    this.typeText(this.firstNameInput, firstName);
-    this.typeText(this.lastNameInput, lastName);
-    this.typeText(this.emailInput, email);
+  fillEmail(email) {
+    cy.get(this.email).clear().type(email);
+    return this;
+  }
 
-    // Select gender
-    if (gender === "Male") {
-      this.clickElement(this.genderRadioMale);
-    } else if (gender === "Female") {
-      this.clickElement(this.genderRadioFemale);
-    } else if (gender === "Other") {
-      this.clickElement(this.genderRadioOther);
-    }
+  selectGender(gender) {
+    const genderMap = {
+      Male: this.genderMale,
+      Female: this.genderFemale,
+      Other: this.genderOther,
+    };
 
-    // Fill mobile number
-    this.typeText(this.mobileNumberInput, mobileNumber);
+    cy.get(genderMap[gender]).click();
+    return this;
+  }
 
-    // Fill date of birth (simplified - in real tests we'd need a more robust date picker)
-    if (dateOfBirth) {
-      this.clickElement(this.dateOfBirthInput);
-      // Would add date picker logic here
-    }
+  fillMobileNumber(number) {
+    cy.get(this.mobileNumber).clear().type(number);
+    return this;
+  }
 
-    // Add subjects
-    if (subjects && subjects.length) {
-      subjects.forEach((subject) => {
-        this.typeText(this.subjectsInput, subject);
-        cy.get(".subjects-auto-complete__menu").contains(subject).click();
-      });
-    }
+  selectBirthDate(day, month, year) {
+    cy.get(this.dateOfBirth).click();
 
-    // Select hobbies
-    if (hobbies && hobbies.includes("Sports")) {
-      this.clickElement(this.hobbiesSports);
-    }
-    if (hobbies && hobbies.includes("Reading")) {
-      this.clickElement(this.hobbiesReading);
-    }
-    if (hobbies && hobbies.includes("Music")) {
-      this.clickElement(this.hobbiesMusic);
-    }
+    // Select month
+    cy.get(".react-datepicker__month-select").select(month);
 
-    // Upload picture
-    if (picture) {
-      this.getElement(this.uploadPicture).attachFile(picture);
-    }
+    // Select year
+    cy.get(".react-datepicker__year-select").select(year);
 
-    // Current address
-    if (currentAddress) {
-      this.typeText(this.currentAddressInput, currentAddress);
-    }
+    // Select day
+    cy.get(`.react-datepicker__day--0${day}`).first().click();
 
-    // State and city selection
-    if (state) {
-      this.clickElement(this.stateDropdown);
-      cy.contains(state).click();
-    }
+    return this;
+  }
 
-    if (city) {
-      this.clickElement(this.cityDropdown);
-      cy.contains(city).click();
-    }
+  enterDateManually(dateText) {
+    cy.get(this.dateOfBirth).clear().type(dateText).type("{enter}");
+    return this;
+  }
 
+  addSubject(subject) {
+    cy.get(this.subjectsInput).type(subject);
+    cy.get(".subjects-auto-complete__menu").contains(subject).click();
+    return this;
+  }
+
+  selectHobby(hobby) {
+    cy.contains("label", hobby).click();
+    return this;
+  }
+
+  uploadPicture(fileName) {
+    cy.get(this.pictureUpload).attachFile(fileName);
+    return this;
+  }
+
+  fillCurrentAddress(address) {
+    cy.get(this.currentAddress).clear().type(address);
+    return this;
+  }
+
+  selectState(state) {
+    cy.get(this.stateSelect).click();
+    cy.contains(".css-11unzgr div", state).click();
+    return this;
+  }
+
+  selectCity(city) {
+    cy.get(this.citySelect).click();
+    cy.contains(".css-11unzgr div", city).click();
     return this;
   }
 
   submitForm() {
-    this.clickElement(this.submitButton);
+    cy.get(this.submitButton).click();
     return this;
   }
 
-  verifyFormSubmission() {
-    this.shouldBeVisible(this.formSubmissionModal);
+  // Verification methods
+  verifySubmissionModalVisible() {
+    cy.get(this.submissionModal).should("be.visible");
+    return this;
+  }
+
+  verifySubmissionModalNotVisible() {
+    cy.get(this.submissionModal).should("not.exist");
+    return this;
+  }
+
+  verifySubmissionValue(label, value) {
+    cy.get(this.submissionTable)
+      .contains("td", label)
+      .siblings("td")
+      .should("contain", value);
+    return this;
+  }
+
+  closeSubmissionModal() {
+    cy.get(this.modalCloseButton).click();
+    return this;
+  }
+
+  verifyRequiredFieldError(fieldId) {
+    cy.get(`#${fieldId}`).should(
+      "have.css",
+      "border-color",
+      "rgb(220, 53, 69)"
+    );
+    return this;
+  }
+
+  verifyRequiredRadioError(fieldId) {
+    cy.get(`input[name="${fieldId}"]`).each(($radio) => {
+      cy.wrap($radio).next().and("have.css", "color", "rgb(220, 53, 69)");
+    });
+  }
+
+  verifyInvalidFieldError(fieldId) {
+    cy.get(`#${fieldId}`).should("have.class", "is-invalid");
     return this;
   }
 }

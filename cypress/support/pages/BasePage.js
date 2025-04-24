@@ -7,7 +7,9 @@ class BasePage {
   }
 
   visit(path = "") {
-    cy.visit(`${this.url}${path}`);
+    cy.blockAdRequests();
+    cy.visit(`${this.url}${path}`, { failOnStatusCode: false });
+    cy.waitForPageToLoad();
   }
 
   getElement(selector) {
@@ -18,8 +20,10 @@ class BasePage {
     this.getElement(selector).click();
   }
 
-  typeText(selector, text) {
-    this.getElement(selector).type(text);
+  typeText(selector, text, parseSpecialChars = true) {
+    this.getElement(selector).type(text, {
+      parseSpecialCharSequences: parseSpecialChars,
+    });
   }
 
   shouldBeVisible(selector) {

@@ -3,16 +3,15 @@ import BasePage from "./BasePage";
 class AlertsFrameWindowsPage extends BasePage {
   constructor() {
     super();
+    // Page paths
     this.path = "/alertsWindows";
+    this.browserWindowsPath = "/browser-windows";
+    this.alertsPath = "/alerts";
+    this.framesPath = "/frames";
+    this.nestedFramesPath = "/nestedframes";
+    this.modalDialogsPath = "/modal-dialogs";
 
-    // Menu selectors
-    this.browserWindowsMenu = "#item-0";
-    this.alertsMenu = "#item-1";
-    this.framesMenu = "#item-2";
-    this.nestedFramesMenu = "#item-3";
-    this.modalDialogsMenu = "#item-4";
-
-    // Browser Windows selectors
+    // Browser windows selectors
     this.newTabButton = "#tabButton";
     this.newWindowButton = "#windowButton";
     this.newWindowMessageButton = "#messageWindowButton";
@@ -21,20 +20,39 @@ class AlertsFrameWindowsPage extends BasePage {
     this.alertButton = "#alertButton";
     this.timerAlertButton = "#timerAlertButton";
     this.confirmButton = "#confirmButton";
-    this.promtButton = "#promtButton"; // Note: there's a typo in the original site
-    this.confirmResult = "#confirmResult";
-    this.promptResult = "#promptResult";
+    this.promptButton = "#promtButton";
 
-    // Modal Dialogs
+    // Modal selectors
     this.smallModalButton = "#showSmallModal";
     this.largeModalButton = "#showLargeModal";
-    this.closeSmallModalButton = "#closeSmallModal";
-    this.closeLargeModalButton = "#closeLargeModal";
-    this.modalContent = ".modal-content";
+    this.modalCloseButton = "button.close";
+    this.modalText = ".modal-body";
+    this.modalTitle = ".modal-title";
   }
 
-  visitAlertsFrameWindowsPage() {
-    this.visit(this.path);
+  // Navigation methods
+  visitBrowserWindowsPage() {
+    this.visit(this.browserWindowsPath);
+    return this;
+  }
+
+  visitAlertsPage() {
+    this.visit(this.alertsPath);
+    return this;
+  }
+
+  visitFramesPage() {
+    this.visit(this.framesPath);
+    return this;
+  }
+
+  visitNestedFramesPage() {
+    this.visit(this.nestedFramesPath);
+    return this;
+  }
+
+  visitModalDialogsPage() {
+    this.visit(this.modalDialogsPath);
     return this;
   }
 
@@ -45,21 +63,42 @@ class AlertsFrameWindowsPage extends BasePage {
   }
 
   clickNewTabButton() {
-    // Handle new tab opening
-    this.handleNewWindow((url) => {
-      // You would verify the URL here if needed
-      cy.log(`New tab would open with URL: ${url}`);
-    });
-    this.clickElement(this.newTabButton);
+    cy.get(this.newTabButton).click();
     return this;
   }
 
   clickNewWindowButton() {
-    // Handle new window opening
-    this.handleNewWindow((url) => {
-      cy.log(`New window would open with URL: ${url}`);
+    cy.get(this.newWindowButton).click();
+    return this;
+  }
+
+  clickNewWindowMessageButton() {
+    cy.get(this.newWindowMessageButton).click();
+    return this;
+  }
+
+  // Handle windows by stubbing
+  stubWindowOpen() {
+    cy.window().then((win) => {
+      cy.stub(win, "open")
+        .as("windowOpen")
+        .callsFake((url) => {
+          win.location.href = url;
+          return { closed: false, close: cy.stub().as("windowClose") };
+        });
     });
-    this.clickElement(this.newWindowButton);
+    return this;
+  }
+
+  verifyWindowOpened() {
+    cy.get("@windowOpen").should("be.called");
+    return this;
+  }
+
+  verifySamplePageContent() {
+    cy.get("h1#sampleHeading")
+      .should("be.visible")
+      .and("have.text", "This is a sample page");
     return this;
   }
 
@@ -93,7 +132,7 @@ class AlertsFrameWindowsPage extends BasePage {
     cy.window().then((win) => {
       cy.stub(win, "prompt").returns(text);
     });
-    this.clickElement(this.promtButton);
+    this.clickElement(this.promptButton);
     return this;
   }
 

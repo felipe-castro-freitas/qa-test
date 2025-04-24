@@ -5,7 +5,18 @@ class ElementsPage extends BasePage {
     super();
     this.path = "/elements";
 
-    // Selectors
+    // Direct paths for each section
+    this.textBoxPath = "/text-box";
+    this.checkBoxPath = "/checkbox";
+    this.radioButtonPath = "/radio-button";
+    this.webTablesPath = "/webtables";
+    this.buttonsPath = "/buttons";
+    this.linksPath = "/links";
+    this.brokenLinksPath = "/broken";
+    this.uploadDownloadPath = "/upload-download";
+    this.dynamicPropertiesPath = "/dynamic-properties";
+
+    // Menu selectors for navigation tests
     this.textBoxMenu = "#item-0";
     this.checkBoxMenu = "#item-1";
     this.radioButtonMenu = "#item-2";
@@ -41,17 +52,72 @@ class ElementsPage extends BasePage {
     return this;
   }
 
-  // Text Box methods
+  visitTextBoxPage() {
+    this.visit(this.textBoxPath);
+    return this;
+  }
+
+  visitCheckBoxPage() {
+    this.visit(this.checkBoxPath);
+    return this;
+  }
+
+  visitRadioButtonPage() {
+    this.visit(this.radioButtonPath);
+    return this;
+  }
+
+  visitWebTablesPage() {
+    this.visit(this.webTablesPath);
+    return this;
+  }
+
+  visitButtonsPage() {
+    this.visit(this.buttonsPath);
+    return this;
+  }
+
+  visitLinksPage() {
+    this.visit(this.linksPath);
+    return this;
+  }
+
+  visitBrokenLinksPage() {
+    this.visit(this.brokenLinksPath);
+    return this;
+  }
+
+  visitUploadDownloadPage() {
+    this.visit(this.uploadDownloadPath);
+    return this;
+  }
+
+  visitDynamicPropertiesPage() {
+    this.visit(this.dynamicPropertiesPath);
+    return this;
+  }
+
+  // Menu navigation methods for navigation tests
   clickTextBoxMenu() {
     this.clickElement(this.textBoxMenu);
     return this;
   }
 
-  fillTextBoxForm(name, email, currentAddress, permanentAddress) {
-    this.typeText(this.fullNameInput, name);
-    this.typeText(this.emailInput, email);
-    this.typeText(this.currentAddressInput, currentAddress);
-    this.typeText(this.permanentAddressInput, permanentAddress);
+  fillTextBoxForm(
+    name,
+    email,
+    currentAddress,
+    permanentAddress,
+    parseSpecialChars = true
+  ) {
+    this.typeText(this.fullNameInput, name, parseSpecialChars);
+    this.typeText(this.emailInput, email, parseSpecialChars);
+    this.typeText(this.currentAddressInput, currentAddress, parseSpecialChars);
+    this.typeText(
+      this.permanentAddressInput,
+      permanentAddress,
+      parseSpecialChars
+    );
     return this;
   }
 
@@ -73,6 +139,85 @@ class ElementsPage extends BasePage {
 
   checkCheckbox(index = 0) {
     this.getElement(this.checkboxItems).eq(index).click();
+    return this;
+  }
+
+  expandFolder(folderName) {
+    cy.contains("span", folderName)
+      .parent()
+      .parent()
+      .find(".rct-collapse-btn")
+      .click();
+    return this;
+  }
+
+  collapseFolder(folderName) {
+    cy.contains("span", folderName)
+      .parent()
+      .parent()
+      .find(".rct-collapse-btn")
+      .click();
+    return this;
+  }
+
+  expandAllFolders() {
+    cy.get('button[title="Expand all"]').click();
+    return this;
+  }
+
+  collapseAllFolders() {
+    cy.get('button[title="Collapse all"]').click();
+    return this;
+  }
+
+  selectCheckbox(label) {
+    cy.contains("span", label).parent().find(".rct-checkbox").click();
+    return this;
+  }
+
+  verifyResultContains(...texts) {
+    cy.get("#result").should("be.visible");
+    texts.forEach((text) => {
+      cy.get("#result").should("contain", text);
+    });
+    return this;
+  }
+
+  verifyFolderVisible(...folderNames) {
+    folderNames.forEach((folderName) => {
+      cy.contains("span", folderName).should("be.visible");
+    });
+    return this;
+  }
+
+  verifyFolderNotVisible(...folderNames) {
+    folderNames.forEach((folderName) => {
+      cy.contains("span", folderName).should("not.exist");
+    });
+    return this;
+  }
+
+  verifyResultNotContains(...texts) {
+    cy.get("#result").should("exist");
+    texts.forEach((text) => {
+      cy.get("#result").should("not.contain", text);
+    });
+    return this;
+  }
+
+  verifyCheckboxState(label, state) {
+    const stateClass =
+      state === "checked"
+        ? "rct-icon-check"
+        : state === "half-checked"
+        ? "rct-icon-half-check"
+        : "rct-icon-uncheck";
+
+    cy.contains("span", label)
+      .parent()
+      .find(".rct-icon")
+      .should("have.class", stateClass);
+
     return this;
   }
 

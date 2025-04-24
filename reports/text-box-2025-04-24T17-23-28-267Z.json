@@ -1,0 +1,82 @@
+{
+  "results": [
+    {
+      "testArea": "Unknown",
+      "testId": "Test-1",
+      "description": "should submit form with all fields filled and verify output",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-2",
+      "description": "should validate email format",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-3",
+      "description": "should submit form with only required fields",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-4",
+      "description": "should handle form submission when all fields are empty",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-5",
+      "description": "should accept special characters in name field",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-6",
+      "description": "should accept special characters in current address field",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-7",
+      "description": "should accept special characters in permanent address field",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-8",
+      "description": "should reject email without @ symbol",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-9",
+      "description": "should handle email with spaces appropriately",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-10",
+      "description": "should reject email with invalid TLD format",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-11",
+      "description": "should accept valid international email formats",
+      "status": "FAILED"
+    }
+  ],
+  "summary": {
+    "total": 11,
+    "passed": 10,
+    "failed": 1,
+    "skipped": 0
+  },
+  "timestamp": "2025-04-24T17:23:28.228Z",
+  "testInfo": {
+    "name": "text-box",
+    "browser": "chrome",
+    "viewport": "1280x720"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "results": [
+    {
+      "testArea": "Unknown",
+      "testId": "Test-1",
+      "description": "should select a single file and verify result text",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-2",
+      "description": "should select a folder and verify all contents are selected",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-3",
+      "description": "should unselect a file after selecting it",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-4",
+      "description": "should unselect a folder after selecting it",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-5",
+      "description": "should select all checkboxes using expand all and home checkbox",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-6",
+      "description": "should unselect all after selecting all",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-7",
+      "description": "should expand and collapse all folders using buttons",
+      "status": "PASSED"
+    }
+  ],
+  "summary": {
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "skipped": 0
+  },
+  "timestamp": "2025-04-24T17:07:21.836Z",
+  "testInfo": {
+    "name": "check-box",
+    "browser": "chrome",
+    "viewport": "1280x720"
+  }
+}

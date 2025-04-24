@@ -1,0 +1,64 @@
+{
+  "results": [
+    {
+      "testArea": "Unknown",
+      "testId": "Test-1",
+      "description": "should submit form with all required fields and verify submission",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-2",
+      "description": "should submit form with all fields filled and verify submission",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-3",
+      "description": "should validate required fields and show errors",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-4",
+      "description": "should handle different gender selections",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-5",
+      "description": "should handle date picker selection",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-6",
+      "description": "should handle manual date entry",
+      "status": "FAILED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-7",
+      "description": "should handle multiple subject selection",
+      "status": "PASSED"
+    },
+    {
+      "testArea": "Unknown",
+      "testId": "Test-8",
+      "description": "should handle city selection based on state",
+      "status": "PASSED"
+    }
+  ],
+  "summary": {
+    "total": 8,
+    "passed": 7,
+    "failed": 1,
+    "skipped": 0
+  },
+  "timestamp": "2025-04-24T17:20:11.803Z",
+  "testInfo": {
+    "name": "form-page",
+    "browser": "chrome",
+    "viewport": "1280x720"
+  }
+}

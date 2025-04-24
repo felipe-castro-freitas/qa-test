@@ -34,7 +34,7 @@ This project demonstrates comprehensive test automation of the DEMOQA website us
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/demoqa-testing-challenge.git
+git clone https://github.com/felipe-castro-freitas/demoqa-testing-challenge.git
 
 # Navigate to project directory
 cd demoqa-testing-challenge
@@ -65,6 +65,10 @@ The automated test suite includes:
 - Practice Form with various input types
 - Email validation against RFC standards
 - Form submission verification
+
+## Utils
+
+- added a custom plugin to export test results to json file
 
 ## Future Enhancements
 

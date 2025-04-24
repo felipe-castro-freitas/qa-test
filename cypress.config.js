@@ -18,6 +18,8 @@ module.exports = defineConfig({
         }
         return launchOptions;
       });
+      require("./cypress/plugins/index.js")(on, config);
+      return config;
     },
     // chromeWebSecurity: false, // This disables web security policies in Chrome
     viewportWidth: 1280,

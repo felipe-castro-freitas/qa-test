@@ -1,6 +1,6 @@
 # DEMOQA Testing Project
 
-## Automated QA Technical Challenge for Insight Global
+## Automated QA Technical Challenge
 
 This repository contains my solution for the QA technical challenge, showcasing test automation expertise with the DEMOQA website.
 
